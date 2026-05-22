@@ -1,665 +1,720 @@
 <!DOCTYPE html>
 <html lang="ro">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Panoramic Botoșani</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-  <style>
-
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-    }
-
-    html{
-      scroll-behavior:smooth;
-    }
-
-    body{
-      background:#F9F6F0;
-      overflow-x:hidden;
-      font-family:'Jost',sans-serif;
-      color:#1C1C1E;
-    }
-
-    :root{
-      --gold:#C9A96E;
-      --gold-light:#E8D5A3;
-      --navy:#0D1B2A;
-      --cream:#F9F6F0;
-      --dark:#1C1C1E;
-    }
-
-    .font-display{
-      font-family:'Cormorant Garamond',serif;
-    }
-
-    /* NAVBAR */
-
-    .navbar{
-      position:fixed;
-      top:0;
-      left:0;
-      width:100%;
-      height:85px;
-      background:white;
-      z-index:999;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding:0 60px;
-      border-bottom:1px solid rgba(0,0,0,0.05);
-    }
-
-    .logo{
-      display:flex;
-      align-items:center;
-      gap:14px;
-    }
-
-    .logo img{
-      width:38px;
-    }
-
-    .logo-text{
-      display:flex;
-      flex-direction:column;
-    }
-
-    .logo-text h2{
-      font-size:32px;
-      letter-spacing:0.12em;
-      line-height:1;
-      font-weight:700;
-    }
-
-    .logo-text span{
-      font-size:10px;
-      letter-spacing:0.42em;
-      color:var(--gold);
-      margin-top:4px;
-    }
-
-    .menu{
-      display:flex;
-      gap:55px;
-    }
-
-    .menu a{
-      text-decoration:none;
-      color:#1C1C1E;
-      font-size:12px;
-      letter-spacing:0.24em;
-      position:relative;
-      transition:0.3s;
-    }
-
-    .menu a:hover{
-      color:var(--gold);
-    }
-
-    .menu a::after{
-      content:'';
-      position:absolute;
-      bottom:-7px;
-      left:0;
-      width:0;
-      height:1px;
-      background:var(--gold);
-      transition:0.3s;
-    }
-
-    .menu a:hover::after{
-      width:100%;
-    }
-
-    /* HERO */
-
-    .hero{
-      width:100%;
-      min-height:100vh;
-      position:relative;
-      display:flex;
-      align-items:center;
-      overflow:hidden;
-    }
-
-    .hero-image{
-      position:absolute;
-      inset:0;
-      background-image:url('images/hero.png');
-      background-size:cover;
-      background-position:center;
-      filter:brightness(0.88);
-    }
-
-    .hero-overlay{
-      position:absolute;
-      inset:0;
-      background:
-      linear-gradient(
-      105deg,
-      rgba(249,246,240,0.98) 0%,
-      rgba(249,246,240,0.85) 35%,
-      rgba(249,246,240,0.28) 62%,
-      rgba(249,246,240,0.04) 100%
-      );
-    }
-
-    .hero-content{
-      position:relative;
-      z-index:5;
-      width:100%;
-      max-width:1400px;
-      margin:auto;
-      padding:140px 70px 100px;
-    }
-
-    .tag{
-      display:flex;
-      align-items:center;
-      gap:16px;
-      margin-bottom:40px;
-    }
-
-    .tag span{
-      color:var(--gold);
-      letter-spacing:0.32em;
-      font-size:12px;
-    }
-
-    .tag-line{
-      width:36px;
-      height:1px;
-      background:var(--gold);
-    }
-
-    .title{
-      line-height:0.9;
-    }
-
-    .title h1{
-      font-size:170px;
-      font-weight:700;
-      letter-spacing:-0.03em;
-    }
-
-    .title h3{
-      color:var(--gold);
-      letter-spacing:0.55em;
-      font-weight:300;
-      margin-top:20px;
-      font-size:28px;
-    }
-
-    .gold-line{
-      width:55px;
-      height:2px;
-      background:linear-gradient(to right,var(--gold),var(--gold-light));
-      margin:40px 0;
-    }
-
-    .subtitle{
-      font-size:58px;
-      margin-bottom:18px;
-      font-weight:400;
-    }
-
-    .description{
-      color:#666;
-      font-size:18px;
-      max-width:560px;
-      line-height:1.8;
-      margin-bottom:42px;
-    }
-
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      gap:12px;
-      background:linear-gradient(135deg,var(--gold),#b8914e);
-      color:white;
-      text-decoration:none;
-      padding:18px 42px;
-      border-radius:4px;
-      letter-spacing:0.18em;
-      font-size:13px;
-      transition:0.35s;
-      font-weight:600;
-    }
-
-    .btn:hover{
-      transform:translateY(-4px);
-      box-shadow:0 18px 40px rgba(201,169,110,0.35);
-    }
-
-    .stats{
-      display:flex;
-      gap:70px;
-      margin-top:70px;
-    }
-
-    .stat h2{
-      font-size:42px;
-      font-weight:600;
-    }
-
-    .stat p{
-      color:#888;
-      letter-spacing:0.18em;
-      margin-top:6px;
-      font-size:11px;
-    }
-
-    /* CARDS */
-
-    .cards-wrapper{
-      position:relative;
-      margin-top:-120px;
-      z-index:10;
-      padding:0 60px 80px;
-    }
-
-    .cards{
-      max-width:1400px;
-      margin:auto;
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:24px;
-    }
-
-    .card{
-      background:rgba(13,27,42,0.92);
-      border:1px solid rgba(201,169,110,0.18);
-      backdrop-filter:blur(14px);
-      border-radius:22px;
-      padding:40px;
-      transition:0.35s;
-    }
-
-    .card:hover{
-      transform:translateY(-8px);
-      border-color:rgba(201,169,110,0.5);
-      box-shadow:0 25px 60px rgba(0,0,0,0.45);
-    }
-
-    .card-icon{
-      width:62px;
-      height:62px;
-      border-radius:16px;
-      background:rgba(201,169,110,0.12);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      color:var(--gold);
-      font-size:26px;
-      margin-bottom:28px;
-    }
-
-    .card h3{
-      color:white;
-      letter-spacing:0.18em;
-      font-size:14px;
-      margin-bottom:14px;
-    }
-
-    .card p{
-      color:rgba(255,255,255,0.55);
-      line-height:1.8;
-      font-size:15px;
-    }
-
-    .card-bottom{
-      margin-top:30px;
-      color:var(--gold);
-      letter-spacing:0.2em;
-      font-size:12px;
-    }
-
-    /* ABOUT */
-
-    .about{
-      padding:120px 60px;
-      background:var(--navy);
-    }
-
-    .about-container{
-      max-width:1400px;
-      margin:auto;
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:80px;
-      align-items:center;
-    }
-
-    .about-image{
-      position:relative;
-    }
-
-    .about-image img{
-      width:100%;
-      border-radius:24px;
-      display:block;
-      box-shadow:0 30px 70px rgba(0,0,0,0.45);
-    }
-
-    .experience{
-      position:absolute;
-      bottom:-30px;
-      right:-20px;
-      background:var(--gold);
-      padding:28px;
-      border-radius:20px;
-      color:white;
-    }
-
-    .experience h2{
-      font-size:48px;
-      line-height:1;
-    }
-
-    .experience p{
-      font-size:11px;
-      letter-spacing:0.24em;
-      margin-top:8px;
-    }
-
-    .about-text .tag{
-      margin-bottom:25px;
-    }
-
-    .about-text h2{
-      color:white;
-      font-size:70px;
-      line-height:1.1;
-      margin-bottom:25px;
-    }
-
-    .about-text h2 span{
-      color:var(--gold);
-    }
-
-    .about-text p{
-      color:rgba(255,255,255,0.65);
-      line-height:1.9;
-      margin-bottom:24px;
-      font-size:17px;
-    }
-
-    /* RESPONSIVE */
-
-    @media(max-width:1100px){
-
-      .title h1{
-        font-size:110px;
-      }
-
-      .subtitle{
-        font-size:42px;
-      }
-
-      .cards{
-        grid-template-columns:1fr;
-      }
-
-      .about-container{
-        grid-template-columns:1fr;
-      }
-
-    }
-
-    @media(max-width:768px){
-
-      .navbar{
-        padding:0 24px;
-      }
-
-      .menu{
-        display:none;
-      }
-
-      .hero-content{
-        padding:140px 24px 120px;
-      }
-
-      .title h1{
-        font-size:72px;
-      }
-
-      .title h3{
-        font-size:18px;
-      }
-
-      .subtitle{
-        font-size:36px;
-      }
-
-      .description{
-        font-size:16px;
-      }
-
-      .stats{
-        gap:35px;
-        flex-wrap:wrap;
-      }
-
-      .cards-wrapper{
-        padding:0 24px 70px;
-      }
-
-      .about{
-        padding:100px 24px;
-      }
-
-      .about-text h2{
-        font-size:48px;
-      }
-
-    }
-
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>Panoramic Botoșani</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+background:#F7F3EE;
+overflow-x:hidden;
+font-family:'Jost',sans-serif;
+color:#1C1C1E;
+}
+
+:root{
+--gold:#C9A96E;
+--gold-light:#E4C98F;
+--navy:#081321;
+--cream:#F7F3EE;
+--dark:#1C1C1E;
+}
+
+.font-display{
+font-family:'Cormorant Garamond',serif;
+}
+
+/* NAVBAR */
+
+.navbar{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:92px;
+background:white;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 60px;
+z-index:999;
+border-bottom:1px solid rgba(0,0,0,0.05);
+backdrop-filter:blur(10px);
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:18px;
+}
+
+.logo img{
+width:62px;
+height:62px;
+object-fit:contain;
+border-radius:50%;
+}
+
+.logo-text{
+display:flex;
+flex-direction:column;
+}
+
+.logo-text h2{
+font-size:52px;
+line-height:0.9;
+letter-spacing:0.08em;
+font-weight:600;
+color:#111;
+}
+
+.logo-text span{
+margin-top:6px;
+font-size:11px;
+letter-spacing:0.45em;
+color:var(--gold);
+}
+
+.menu{
+display:flex;
+gap:55px;
+}
+
+.menu a{
+text-decoration:none;
+color:#111;
+font-size:13px;
+letter-spacing:0.24em;
+position:relative;
+transition:0.3s;
+}
+
+.menu a:hover{
+color:var(--gold);
+}
+
+.menu a::after{
+content:'';
+position:absolute;
+left:0;
+bottom:-7px;
+width:0;
+height:1px;
+background:var(--gold);
+transition:0.3s;
+}
+
+.menu a:hover::after{
+width:100%;
+}
+
+/* HERO */
+
+.hero{
+position:relative;
+width:100%;
+min-height:100vh;
+overflow:hidden;
+display:flex;
+align-items:center;
+}
+
+.hero-bg{
+position:absolute;
+inset:0;
+background-image:url('hero.PNG');
+background-size:cover;
+background-position:center;
+filter:brightness(0.92);
+}
+
+.hero-overlay{
+position:absolute;
+inset:0;
+
+background:
+linear-gradient(
+105deg,
+rgba(247,243,238,0.98) 0%,
+rgba(247,243,238,0.92) 30%,
+rgba(247,243,238,0.45) 55%,
+rgba(247,243,238,0.05) 100%
+);
+
+}
+
+.hero-content{
+position:relative;
+z-index:5;
+max-width:1400px;
+margin:auto;
+width:100%;
+padding:170px 70px 120px;
+}
+
+.tag{
+display:flex;
+align-items:center;
+gap:16px;
+margin-bottom:36px;
+}
+
+.tag span{
+color:var(--gold);
+font-size:12px;
+letter-spacing:0.32em;
+}
+
+.tag-line{
+width:40px;
+height:1px;
+background:var(--gold);
+}
+
+.hero-title{
+line-height:0.9;
+}
+
+.hero-title h1{
+font-size:170px;
+font-weight:700;
+letter-spacing:-0.03em;
+color:#111;
+}
+
+.hero-title h3{
+font-size:30px;
+font-weight:300;
+letter-spacing:0.55em;
+color:var(--gold);
+margin-top:20px;
+}
+
+.gold-line{
+width:60px;
+height:2px;
+background:linear-gradient(to right,var(--gold),var(--gold-light));
+margin:42px 0;
+}
+
+.subtitle{
+font-size:62px;
+font-weight:400;
+margin-bottom:22px;
+color:#1C1C1E;
+}
+
+.description{
+max-width:560px;
+line-height:1.9;
+font-size:19px;
+color:#5E5E5E;
+margin-bottom:42px;
+}
+
+.btn{
+display:inline-flex;
+align-items:center;
+gap:12px;
+padding:19px 42px;
+background:linear-gradient(135deg,var(--gold),#b99149);
+color:white;
+text-decoration:none;
+border-radius:5px;
+font-size:13px;
+letter-spacing:0.18em;
+font-weight:600;
+transition:0.35s;
+}
+
+.btn:hover{
+transform:translateY(-4px);
+box-shadow:0 20px 45px rgba(201,169,110,0.35);
+}
+
+.stats{
+display:flex;
+gap:70px;
+margin-top:70px;
+}
+
+.stat h2{
+font-size:44px;
+font-weight:600;
+color:#111;
+}
+
+.stat p{
+margin-top:8px;
+font-size:11px;
+letter-spacing:0.22em;
+color:#8A8A8A;
+}
+
+/* CARDS */
+
+.cards-section{
+position:relative;
+margin-top:-110px;
+z-index:20;
+padding:0 60px 100px;
+background:
+linear-gradient(
+180deg,
+transparent 0%,
+#071321 30%
+);
+}
+
+.cards{
+max-width:1400px;
+margin:auto;
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:28px;
+}
+
+.card{
+background:rgba(8,19,33,0.94);
+border:1px solid rgba(201,169,110,0.22);
+border-radius:24px;
+padding:42px;
+backdrop-filter:blur(14px);
+transition:0.35s;
+}
+
+.card:hover{
+transform:translateY(-8px);
+border-color:rgba(201,169,110,0.55);
+box-shadow:0 30px 60px rgba(0,0,0,0.5);
+}
+
+.card-icon{
+width:68px;
+height:68px;
+border-radius:18px;
+display:flex;
+align-items:center;
+justify-content:center;
+border:1px solid rgba(201,169,110,0.25);
+background:rgba(201,169,110,0.08);
+font-size:28px;
+margin-bottom:30px;
+}
+
+.card h3{
+color:white;
+font-size:15px;
+letter-spacing:0.2em;
+margin-bottom:22px;
+}
+
+.card p{
+color:rgba(255,255,255,0.65);
+line-height:1.8;
+font-size:17px;
+}
+
+.card a{
+display:inline-block;
+margin-top:28px;
+text-decoration:none;
+color:var(--gold);
+font-size:13px;
+letter-spacing:0.22em;
+}
+
+/* ABOUT */
+
+.about{
+background:#071321;
+padding:120px 60px;
+}
+
+.about-container{
+max-width:1400px;
+margin:auto;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:90px;
+align-items:center;
+}
+
+.about-image{
+position:relative;
+}
+
+.about-image img{
+width:100%;
+border-radius:28px;
+display:block;
+box-shadow:0 30px 70px rgba(0,0,0,0.45);
+}
+
+.experience{
+position:absolute;
+bottom:-30px;
+right:-20px;
+background:var(--gold);
+padding:34px;
+border-radius:24px;
+color:white;
+text-align:center;
+}
+
+.experience h2{
+font-size:62px;
+line-height:1;
+}
+
+.experience p{
+margin-top:10px;
+font-size:12px;
+letter-spacing:0.22em;
+line-height:1.7;
+}
+
+.about-text .tag{
+margin-bottom:24px;
+}
+
+.about-text h2{
+font-size:72px;
+line-height:1.1;
+color:white;
+margin-bottom:28px;
+}
+
+.about-text h2 span{
+color:var(--gold);
+}
+
+.about-text p{
+font-size:18px;
+line-height:2;
+color:rgba(255,255,255,0.72);
+margin-bottom:26px;
+}
+
+/* FOOTER */
+
+.footer{
+background:#06111D;
+padding:45px;
+text-align:center;
+color:rgba(255,255,255,0.55);
+font-size:13px;
+letter-spacing:0.2em;
+}
+
+/* MOBILE */
+
+@media(max-width:1100px){
+
+.hero-title h1{
+font-size:110px;
+}
+
+.subtitle{
+font-size:42px;
+}
+
+.cards{
+grid-template-columns:1fr;
+}
+
+.about-container{
+grid-template-columns:1fr;
+}
+
+}
+
+@media(max-width:768px){
+
+.navbar{
+padding:0 22px;
+}
+
+.menu{
+display:none;
+}
+
+.logo-text h2{
+font-size:28px;
+}
+
+.hero-content{
+padding:150px 24px 120px;
+}
+
+.hero-title h1{
+font-size:72px;
+}
+
+.hero-title h3{
+font-size:18px;
+}
+
+.subtitle{
+font-size:36px;
+}
+
+.description{
+font-size:16px;
+}
+
+.stats{
+gap:35px;
+flex-wrap:wrap;
+}
+
+.cards-section{
+padding:0 24px 80px;
+}
+
+.about{
+padding:100px 24px;
+}
+
+.about-text h2{
+font-size:46px;
+}
+
+}
+
+</style>
+
 </head>
 
 <body>
 
-  <!-- NAVBAR -->
+<!-- NAVBAR -->
 
-  <nav class="navbar">
+<nav class="navbar">
 
-    <div class="logo">
+<div class="logo">
 
-      <img src="images/logo.png" alt="Panoramic Logo">
+<img src="logo.png" alt="Panoramic Logo">
 
-      <div class="logo-text">
-        <h2 class="font-display">PANORAMIC</h2>
-        <span>BOTOȘANI</span>
-      </div>
+<div class="logo-text">
+<h2 class="font-display">PANORAMIC</h2>
+<span>BOTOȘANI</span>
+</div>
 
-    </div>
+</div>
 
-    <div class="menu">
-      <a href="#">PROIECT BAISA</a>
-      <a href="#">PROIECT STĂNCEȘTI</a>
-      <a href="#">DESPRE NOI</a>
-    </div>
+<div class="menu">
 
-  </nav>
+<a href="#">PROIECT BAISA</a>
+<a href="#">PROIECT STĂNCEȘTI</a>
+<a href="#">DESPRE NOI</a>
 
-  <!-- HERO -->
+</div>
 
-  <section class="hero">
+</nav>
 
-    <div class="hero-image"></div>
-    <div class="hero-overlay"></div>
+<!-- HERO -->
 
-    <div class="hero-content">
+<section class="hero">
 
-      <div class="tag">
-        <span>DEZVOLTARE IMOBILIARĂ PREMIUM</span>
-        <div class="tag-line"></div>
-      </div>
+<div class="hero-bg"></div>
 
-      <div class="title">
+<div class="hero-overlay"></div>
 
-        <h1 class="font-display">
-          PANORAMIC
-        </h1>
+<div class="hero-content">
 
-        <h3>BOTOȘANI</h3>
+<div class="tag">
+<span>DEZVOLTARE IMOBILIARĂ PREMIUM</span>
+<div class="tag-line"></div>
+</div>
 
-      </div>
+<div class="hero-title">
 
-      <div class="gold-line"></div>
+<h1 class="font-display">
+PANORAMIC
+</h1>
 
-      <h2 class="subtitle font-display">
-        UN ALTFEL DE ACASĂ.
-      </h2>
+<h3>BOTOȘANI</h3>
 
-      <p class="description">
-        Descoperă apartamentele Panoramic — spații proiectate cu grijă pentru confortul și stilul vieții moderne în Botoșani.
-      </p>
+</div>
 
-      <a href="#" class="btn">
-        VEZI PROIECTELE →
-      </a>
+<div class="gold-line"></div>
 
-      <div class="stats">
+<h2 class="subtitle font-display">
+UN ALTFEL DE ACASĂ.
+</h2>
 
-        <div class="stat">
-          <h2 class="font-display">2</h2>
-          <p>PROIECTE ACTIVE</p>
-        </div>
+<p class="description">
+Descoperă apartamentele Panoramic — spații proiectate cu grijă pentru confortul și stilul vieții moderne în Botoșani.
+</p>
 
-        <div class="stat">
-          <h2 class="font-display">120+</h2>
-          <p>APARTAMENTE</p>
-        </div>
+<a href="#" class="btn">
+VEZI PROIECTELE →
+</a>
 
-        <div class="stat">
-          <h2 class="font-display">7</h2>
-          <p>ETAJE MODERNE</p>
-        </div>
+<div class="stats">
 
-      </div>
+<div class="stat">
+<h2 class="font-display">2</h2>
+<p>PROIECTE ACTIVE</p>
+</div>
 
-    </div>
+<div class="stat">
+<h2 class="font-display">120+</h2>
+<p>APARTAMENTE</p>
+</div>
 
-  </section>
+<div class="stat">
+<h2 class="font-display">7</h2>
+<p>ETAJE MODERNE</p>
+</div>
 
-  <!-- CARDS -->
+</div>
 
-  <section class="cards-wrapper">
+</div>
 
-    <div class="cards">
+</section>
 
-      <div class="card">
+<!-- CARDS -->
 
-        <div class="card-icon">🌿</div>
+<section class="cards-section">
 
-        <h3>PROIECT BAISA</h3>
+<div class="cards">
 
-        <p>
-          Cartier liniștit, natură și confort urban.
-        </p>
+<div class="card">
 
-        <div class="card-bottom">
-          DETALII →
-        </div>
+<div class="card-icon">🌿</div>
 
-      </div>
+<h3>PROIECT BAISA</h3>
 
-      <div class="card">
+<p>
+Cartier liniștit, natură și confort urban.
+</p>
 
-        <div class="card-icon">🌲</div>
+<a href="#">
+DETALII →
+</a>
 
-        <h3>PROIECT STĂNCEȘTI</h3>
+</div>
 
-        <p>
-          Vedere panoramică și arhitectură contemporană.
-        </p>
+<div class="card">
 
-        <div class="card-bottom">
-          DETALII →
-        </div>
+<div class="card-icon">🌲</div>
 
-      </div>
+<h3>PROIECT STĂNCEȘTI</h3>
 
-      <div class="card">
+<p>
+Vedere panoramică și arhitectură contemporană.
+</p>
 
-        <div class="card-icon">👥</div>
+<a href="#">
+DETALII →
+</a>
 
-        <h3>DESPRE NOI</h3>
+</div>
 
-        <p>
-          Echipa și misiunea Panoramic Botoșani.
-        </p>
+<div class="card">
 
-        <div class="card-bottom">
-          DETALII →
-        </div>
+<div class="card-icon">👥</div>
 
-      </div>
+<h3>DESPRE NOI</h3>
 
-    </div>
+<p>
+Echipa și misiunea Panoramic Botoșani.
+</p>
 
-  </section>
+<a href="#">
+DETALII →
+</a>
 
-  <!-- ABOUT -->
+</div>
 
-  <section class="about">
+</div>
 
-    <div class="about-container">
+</section>
 
-      <div class="about-image">
+<!-- ABOUT -->
 
-        <img src="images/about.png" alt="About Panoramic">
+<section class="about">
 
-        <div class="experience">
-          <h2 class="font-display">10+</h2>
-          <p>ANI EXPERIENȚĂ</p>
-        </div>
+<div class="about-container">
 
-      </div>
+<div class="about-image">
 
-      <div class="about-text">
+<img src="about.jpeg" alt="About Panoramic">
 
-        <div class="tag">
-          <span>DESPRE NOI</span>
-          <div class="tag-line"></div>
-        </div>
+<div class="experience">
 
-        <h2 class="font-display">
-          Construim Spații
-          <br>
-          <span>Pentru Viața Ta</span>
-        </h2>
+<h2 class="font-display">
+10+
+</h2>
 
-        <div class="gold-line"></div>
+<p>
+ANI<br>EXPERIENȚĂ
+</p>
 
-        <p>
-          Panoramic Botoșani este un dezvoltator imobiliar premium cu o viziune modernă și orientată spre calitate.
-        </p>
+</div>
 
-        <p>
-          Proiectele noastre combină designul contemporan, materialele premium și confortul autentic al unei locuințe moderne.
-        </p>
+</div>
 
-        <a href="#" class="btn">
-          CONTACTEAZĂ-NE →
-        </a>
+<div class="about-text">
 
-      </div>
+<div class="tag">
+<span>DESPRE NOI</span>
+<div class="tag-line"></div>
+</div>
 
-    </div>
+<h2 class="font-display">
+Construim Spații
+<br>
+<span>Pentru Viața Ta</span>
+</h2>
 
-  </section>
+<div class="gold-line"></div>
+
+<p>
+Panoramic Botoșani este un dezvoltator imobiliar premium cu o viziune modernă și orientată spre calitate.
+</p>
+
+<p>
+Proiectele noastre combină designul contemporan, materialele premium și confortul autentic al unei locuințe moderne.
+</p>
+
+<a href="#" class="btn">
+CONTACTEAZĂ-NE →
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- FOOTER -->
+
+<footer class="footer">
+
+© 2025 PANORAMIC BOTOȘANI. TOATE DREPTURILE REZERVATE.
+
+</footer>
 
 </body>
 </html>
