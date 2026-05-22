@@ -1,0 +1,474 @@
+import { useState, useEffect } from "react";
+import { ArrowRight, TreePine, Leaf, Users, Menu, X, MapPin, Phone, Mail } from "lucide-react";
+
+const GOLD = "#C9A96E";
+const GOLD_LIGHT = "#E8D5A3";
+const NAVY = "#0D1B2A";
+const ANTRACIT = "#1C1C1E";
+const CREAM = "#F9F6F0";
+
+const fontStyle = `
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Jost:wght@300;400;500;600;700&display=swap');
+  * { box-sizing: border-box; }
+  .font-display { font-family: 'Cormorant Garamond', serif; }
+  .font-body { font-family: 'Jost', sans-serif; }
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(32px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .anim-fade-up-1  { animation: fadeInUp 0.9s cubic-bezier(.22,.68,0,1.2) 0.1s both; }
+  .anim-fade-up-2  { animation: fadeInUp 0.9s cubic-bezier(.22,.68,0,1.2) 0.3s both; }
+  .anim-fade-up-3  { animation: fadeInUp 0.9s cubic-bezier(.22,.68,0,1.2) 0.5s both; }
+  .anim-fade-up-4  { animation: fadeInUp 0.9s cubic-bezier(.22,.68,0,1.2) 0.7s both; }
+  .anim-fade-in    { animation: fadeIn  1.2s ease 0.2s both; }
+  .gold-line {
+    width: 48px; height: 2px;
+    background: linear-gradient(90deg, #C9A96E, #E8D5A3);
+    border-radius: 2px;
+  }
+  .btn-gold {
+    background: linear-gradient(135deg, #C9A96E 0%, #b8924f 100%);
+    color: #fff;
+    font-family: 'Jost', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    font-size: 0.78rem;
+    padding: 14px 36px;
+    border-radius: 3px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.35s cubic-bezier(.22,.68,0,1.2);
+    display: inline-flex; align-items: center; gap: 10px;
+    position: relative; overflow: hidden;
+  }
+  .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(201,169,110,0.4); }
+  .nav-link {
+    font-family: 'Jost', sans-serif;
+    font-weight: 500;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    color: #1C1C1E;
+    text-decoration: none;
+    position: relative;
+    padding-bottom: 4px;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+  .nav-link::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0;
+    width: 0; height: 1.5px;
+    background: #C9A96E;
+    transition: width 0.35s cubic-bezier(.22,.68,0,1.2);
+  }
+  .nav-link:hover { color: #C9A96E; }
+  .nav-link:hover::after { width: 100%; }
+  .card-project {
+    background: rgba(13, 27, 42, 0.92);
+    border: 1px solid rgba(201,169,110,0.18);
+    border-radius: 16px;
+    padding: 32px 28px;
+    cursor: pointer;
+    transition: all 0.35s cubic-bezier(.22,.68,0,1.2);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    flex: 1;
+    min-width: 0;
+    display: flex; flex-direction: column; gap: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .card-project::before {
+    content: '';
+    position: absolute; inset: 0;
+    border-radius: 16px;
+    background: linear-gradient(135deg, rgba(201,169,110,0.06) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.35s;
+  }
+  .card-project:hover {
+    transform: translateY(-6px);
+    border-color: rgba(201,169,110,0.55);
+    box-shadow: 0 20px 48px rgba(0,0,0,0.5), 0 0 0 1px rgba(201,169,110,0.25), 0 4px 20px rgba(201,169,110,0.18);
+  }
+  .card-project:hover::before { opacity: 1; }
+  .icon-wrap {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    background: rgba(201,169,110,0.12);
+    border: 1px solid rgba(201,169,110,0.25);
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.35s;
+  }
+  .card-project:hover .icon-wrap {
+    background: rgba(201,169,110,0.22);
+    border-color: rgba(201,169,110,0.5);
+  }
+  .hero-img-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(
+      105deg,
+      rgba(249,246,240,0.97) 0%,
+      rgba(249,246,240,0.85) 35%,
+      rgba(249,246,240,0.30) 60%,
+      rgba(249,246,240,0.05) 100%
+    );
+  }
+  .hero-img-overlay-mobile {
+    position: absolute; inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(249,246,240,0.15) 0%,
+      rgba(249,246,240,0.75) 55%,
+      rgba(249,246,240,0.98) 100%
+    );
+  }
+  .navbar-scroll { transition: box-shadow 0.35s, background 0.35s; }
+  .navbar-scroll.scrolled { box-shadow: 0 2px 32px rgba(0,0,0,0.08); }
+  .section-tag {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.28em;
+    color: #C9A96E;
+    font-weight: 500;
+  }
+  .divider-gold {
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, rgba(201,169,110,0.5), transparent);
+  }
+`;
+
+function Logo() {
+  return (
+    <div className="flex items-center gap-3" style={{ cursor: "pointer" }}>
+      <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="2"  y="12" width="10" height="22" rx="1.5" fill={ANTRACIT} />
+        <rect x="14" y="4"  width="8"  height="30" rx="1.5" fill={ANTRACIT} />
+        <rect x="24" y="16" width="10" height="18" rx="1.5" fill={ANTRACIT} />
+        <rect x="4"  y="16" width="2"  height="3"  rx="0.5" fill={GOLD} opacity="0.8" />
+        <rect x="4"  y="22" width="2"  height="3"  rx="0.5" fill={GOLD} opacity="0.8" />
+        <rect x="7"  y="16" width="2"  height="3"  rx="0.5" fill={GOLD} opacity="0.5" />
+        <rect x="16" y="8"  width="2"  height="3"  rx="0.5" fill={GOLD} opacity="0.8" />
+        <rect x="16" y="14" width="2"  height="3"  rx="0.5" fill={GOLD} opacity="0.8" />
+        <rect x="20" y="8"  width="1.5" height="3" rx="0.5" fill={GOLD} opacity="0.5" />
+        <rect x="26" y="20" width="2"  height="3"  rx="0.5" fill={GOLD} opacity="0.8" />
+        <rect x="26" y="26" width="2"  height="3"  rx="0.5" fill={GOLD} opacity="0.6" />
+      </svg>
+      <div className="flex flex-col leading-none">
+        <span className="font-display font-bold" style={{ color: ANTRACIT, fontSize: "1.25rem", letterSpacing: "0.12em" }}>
+          PANORAMIC
+        </span>
+        <span className="font-body font-light" style={{ color: GOLD, fontSize: "0.62rem", letterSpacing: "0.38em", marginTop: "2px" }}>
+          BOTOȘANI
+        </span>
+      </div>
+    </div>
+  );
+}
+
+function Navbar() {
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  useEffect(() => {
+    const handler = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", handler);
+    return () => window.removeEventListener("scroll", handler);
+  }, []);
+
+  const links = ["PROIECT BAISA", "PROIECT STĂNCEȘTI", "DESPRE NOI"];
+
+  return (
+    <>
+      <style>{fontStyle}</style>
+      <nav
+        className={`navbar-scroll fixed top-0 left-0 right-0 z-50 bg-white ${scrolled ? "scrolled" : ""}`}
+        style={{ borderBottom: scrolled ? "1px solid rgba(0,0,0,0.06)" : "1px solid transparent" }}
+      >
+        <div className="max-w-7xl mx-auto px-6 md:px-10 flex items-center justify-between" style={{ height: "80px" }}>
+          <Logo />
+          <div className="hidden md:flex items-center gap-10">
+            {links.map((link) => (
+              <span key={link} className="nav-link">{link}</span>
+            ))}
+          </div>
+          <button className="md:hidden p-2" onClick={() => setMobileOpen(!mobileOpen)} style={{ color: ANTRACIT }}>
+            {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+          </button>
+        </div>
+        {mobileOpen && (
+          <div className="md:hidden bg-white border-t" style={{ borderColor: "rgba(0,0,0,0.06)" }}>
+            {links.map((link) => (
+              <div
+                key={link}
+                className="px-8 py-5 nav-link"
+                style={{ display: "block", borderBottom: "1px solid rgba(0,0,0,0.04)" }}
+                onClick={() => setMobileOpen(false)}
+              >
+                {link}
+              </div>
+            ))}
+          </div>
+        )}
+      </nav>
+    </>
+  );
+}
+
+function Hero() {
+  const imgUrl = "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1400&q=85&auto=format&fit=crop";
+
+  return (
+    <section className="relative w-full overflow-hidden" style={{ minHeight: "100vh", background: CREAM }}>
+      <div className="absolute inset-0 anim-fade-in">
+        <img
+          src={imgUrl}
+          alt="Ansamblu rezidențial modern Panoramic Botoșani"
+          className="w-full h-full object-cover object-center"
+          style={{ filter: "brightness(0.88) saturate(1.1)" }}
+        />
+        <div className="hero-img-overlay hidden md:block" />
+        <div className="hero-img-overlay-mobile md:hidden" />
+      </div>
+
+      <div
+        className="relative z-10 max-w-7xl mx-auto px-6 md:px-10 flex flex-col md:flex-row items-center"
+        style={{ minHeight: "100vh", paddingTop: "80px" }}
+      >
+        <div className="w-full md:w-1/2 flex flex-col justify-center py-20 md:py-0">
+          <div className="anim-fade-up-1 flex items-center gap-3 mb-8">
+            <span className="section-tag">DEZVOLTARE IMOBILIARĂ PREMIUM</span>
+            <div style={{ width: 32, height: 1, background: GOLD }} />
+          </div>
+
+          <h1 className="anim-fade-up-2 font-display leading-none mb-2" style={{ color: ANTRACIT }}>
+            <span className="block" style={{ fontSize: "clamp(4.5rem, 9vw, 8rem)", fontWeight: 700, letterSpacing: "-0.01em" }}>
+              PANORAMIC
+            </span>
+            <span className="block font-body font-light" style={{ fontSize: "clamp(1.1rem, 2.5vw, 1.6rem)", letterSpacing: "0.55em", color: GOLD, marginTop: "6px" }}>
+              BOTOȘANI
+            </span>
+          </h1>
+
+          <div className="anim-fade-up-2 gold-line my-7" />
+
+          <p className="anim-fade-up-3 font-display" style={{ fontSize: "clamp(1.4rem, 3vw, 2rem)", color: ANTRACIT, fontWeight: 400, letterSpacing: "0.04em", lineHeight: 1.35, marginBottom: "10px" }}>
+            UN ALTFEL DE ACASĂ.
+          </p>
+          <p className="anim-fade-up-3 font-body" style={{ fontSize: "0.95rem", color: "#555", fontWeight: 300, lineHeight: 1.75, maxWidth: "380px", marginBottom: "40px" }}>
+            Descoperă apartamentele Panoramic — spații proiectate cu grijă pentru confortul și stilul vieții moderne în Botoșani.
+          </p>
+
+          <div className="anim-fade-up-4">
+            <button className="btn-gold font-body">
+              VEZI PROIECTELE
+              <ArrowRight size={15} />
+            </button>
+          </div>
+
+          <div className="anim-fade-up-4 flex items-center gap-8 mt-14">
+            {[
+              { val: "2", label: "Proiecte Active" },
+              { val: "120+", label: "Apartamente" },
+              { val: "7", label: "Etaje Moderne" },
+            ].map((s, i) => (
+              <div key={i} className="flex items-center gap-8">
+                {i > 0 && <div className="divider-gold" style={{ height: 36 }} />}
+                <div>
+                  <div className="font-display font-semibold" style={{ color: ANTRACIT, fontSize: "1.6rem", lineHeight: 1 }}>{s.val}</div>
+                  <div className="font-body font-light mt-1" style={{ color: "#888", fontSize: "0.7rem", letterSpacing: "0.15em" }}>{s.label.toUpperCase()}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="hidden md:block w-1/2" />
+      </div>
+
+      <div className="relative z-10 w-full" style={{ background: `linear-gradient(180deg, transparent 0%, ${NAVY} 30%)` }}>
+        <div className="max-w-7xl mx-auto px-6 md:px-10 pb-16 pt-10">
+          <div className="flex flex-col md:flex-row gap-5">
+            <ProjectCard icon={<Leaf size={22} color={GOLD} />} title="PROIECT BAISA" subtitle="Cartier liniștit, natură și confort urban" delay="0.1s" />
+            <ProjectCard icon={<TreePine size={22} color={GOLD} />} title="PROIECT STĂNCEȘTI" subtitle="Vedere panoramică, arhitectură contemporană" delay="0.25s" />
+            <ProjectCard icon={<Users size={22} color={GOLD} />} title="DESPRE NOI" subtitle="Echipa și misiunea Panoramic Botoșani" delay="0.4s" />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ProjectCard({ icon, title, subtitle, delay }) {
+  return (
+    <div className="card-project" style={{ animation: `fadeInUp 0.8s cubic-bezier(.22,.68,0,1.2) ${delay} both` }}>
+      <div className="icon-wrap">{icon}</div>
+      <div>
+        <div className="font-body font-semibold" style={{ color: "#fff", fontSize: "0.82rem", letterSpacing: "0.2em", marginBottom: "8px" }}>{title}</div>
+        <div className="font-body font-light" style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.8rem", lineHeight: 1.6 }}>{subtitle}</div>
+      </div>
+      <div className="flex items-center gap-2 mt-auto pt-2">
+        <span className="font-body font-medium" style={{ color: GOLD, fontSize: "0.7rem", letterSpacing: "0.2em" }}>DETALII</span>
+        <ArrowRight size={14} color={GOLD} />
+      </div>
+    </div>
+  );
+}
+
+function Features() {
+  const features = [
+    { icon: "🏗️", title: "Arhitectură Modernă", desc: "Fațade contemporane, materiale premium și design atemporal." },
+    { icon: "🌿", title: "Spații Verzi", desc: "Alei pietonale, gazon îngrijit și copaci maturi în jurul blocului." },
+    { icon: "🔒", title: "Securitate 24/7", desc: "Sistem de supraveghere video, acces controlat și interfonie modernă." },
+    { icon: "🅿️", title: "Parcare Subterană", desc: "Locuri de parcare dedicate pentru fiecare apartament." },
+    { icon: "💡", title: "Eficiență Energetică", desc: "Clasa A de eficiență, izolație termică de ultimă generație." },
+    { icon: "📍", title: "Locație Strategică", desc: "Amplasament central în Botoșani, aproape de toate facilitățile." },
+  ];
+
+  return (
+    <section style={{ background: CREAM, padding: "100px 0" }}>
+      <div className="max-w-7xl mx-auto px-6 md:px-10">
+        <div className="flex flex-col items-center text-center mb-16">
+          <span className="section-tag mb-4">DE CE PANORAMIC</span>
+          <h2 className="font-display" style={{ fontSize: "clamp(2rem, 4vw, 3rem)", color: ANTRACIT, fontWeight: 600 }}>
+            Calitate în Fiecare Detaliu
+          </h2>
+          <div className="gold-line mt-5 mx-auto" />
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {features.map((f, i) => (
+            <div
+              key={i}
+              className="p-8 rounded-2xl border transition-all duration-300 cursor-default"
+              style={{ background: "#fff", border: "1px solid rgba(0,0,0,0.06)", borderRadius: "16px" }}
+              onMouseEnter={e => {
+                e.currentTarget.style.borderColor = "rgba(201,169,110,0.5)";
+                e.currentTarget.style.boxShadow = "0 12px 40px rgba(201,169,110,0.12)";
+                e.currentTarget.style.transform = "translateY(-4px)";
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.borderColor = "rgba(0,0,0,0.06)";
+                e.currentTarget.style.boxShadow = "none";
+                e.currentTarget.style.transform = "translateY(0)";
+              }}
+            >
+              <div className="text-3xl mb-5">{f.icon}</div>
+              <h3 className="font-body font-semibold mb-3" style={{ color: ANTRACIT, fontSize: "0.95rem", letterSpacing: "0.05em" }}>{f.title}</h3>
+              <p className="font-body font-light" style={{ color: "#777", fontSize: "0.875rem", lineHeight: 1.75 }}>{f.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function About() {
+  const img2 = "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=900&q=80&auto=format&fit=crop";
+
+  return (
+    <section style={{ background: NAVY, padding: "100px 0" }}>
+      <div className="max-w-7xl mx-auto px-6 md:px-10 flex flex-col md:flex-row gap-16 items-center">
+        <div className="w-full md:w-1/2 relative">
+          <div className="overflow-hidden rounded-2xl" style={{ aspectRatio: "4/3", boxShadow: "0 32px 80px rgba(0,0,0,0.5)" }}>
+            <img src={img2} alt="Panoramic Botoșani" className="w-full h-full object-cover" style={{ filter: "brightness(0.85) saturate(0.9)" }} />
+          </div>
+          <div className="absolute -bottom-6 -right-4 md:-right-8 p-6 rounded-2xl" style={{ background: GOLD, boxShadow: "0 16px 40px rgba(201,169,110,0.35)" }}>
+            <div className="font-display font-bold text-white" style={{ fontSize: "2rem", lineHeight: 1 }}>10+</div>
+            <div className="font-body font-light text-white" style={{ fontSize: "0.7rem", letterSpacing: "0.2em", opacity: 0.85 }}>ANI EXPERIENȚĂ</div>
+          </div>
+        </div>
+        <div className="w-full md:w-1/2 flex flex-col gap-6">
+          <span className="section-tag">DESPRE NOI</span>
+          <h2 className="font-display" style={{ color: "#fff", fontSize: "clamp(1.8rem, 3.5vw, 2.6rem)", fontWeight: 600, lineHeight: 1.2 }}>
+            Construim Spații<br /><span style={{ color: GOLD }}>Pentru Viața Ta</span>
+          </h2>
+          <div className="gold-line" />
+          <p className="font-body font-light" style={{ color: "rgba(255,255,255,0.6)", fontSize: "0.95rem", lineHeight: 1.85 }}>
+            Panoramic Botoșani este un dezvoltator imobiliar premium cu o viziune clară: să ofere locuințe moderne, accesibile și bine integrate în tesătura urbană a Botoșanilor.
+          </p>
+          <p className="font-body font-light" style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.9rem", lineHeight: 1.85 }}>
+            Proiectele noastre se disting prin calitatea materialelor, atenția la detalii arhitecturale și respectul față de comunitate și mediu.
+          </p>
+          <button className="btn-gold font-body mt-4 self-start">
+            CONTACTEAZĂ-NE <ArrowRight size={15} />
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Contact() {
+  return (
+    <section style={{ background: CREAM, padding: "80px 0" }}>
+      <div className="max-w-7xl mx-auto px-6 md:px-10">
+        <div className="flex flex-col items-center text-center mb-12">
+          <span className="section-tag mb-4">CONTACT</span>
+          <h2 className="font-display" style={{ color: ANTRACIT, fontSize: "clamp(1.8rem, 3vw, 2.4rem)", fontWeight: 600 }}>
+            Suntem Aici Pentru Tine
+          </h2>
+          <div className="gold-line mt-5 mx-auto" />
+        </div>
+        <div className="flex flex-col md:flex-row gap-6 justify-center max-w-3xl mx-auto">
+          {[
+            { icon: <MapPin size={20} color={GOLD} />, label: "Adresă", val: "Botoșani, România" },
+            { icon: <Phone size={20} color={GOLD} />, label: "Telefon", val: "+40 700 000 000" },
+            { icon: <Mail size={20} color={GOLD} />, label: "Email", val: "contact@panoramic.ro" },
+          ].map((c, i) => (
+            <div key={i} className="flex flex-col items-center gap-3 p-8 rounded-2xl text-center flex-1" style={{ background: "#fff", border: "1px solid rgba(0,0,0,0.06)" }}>
+              <div className="icon-wrap" style={{ background: "rgba(201,169,110,0.1)", border: "1px solid rgba(201,169,110,0.25)" }}>
+                {c.icon}
+              </div>
+              <div>
+                <div className="font-body font-light" style={{ color: "#999", fontSize: "0.7rem", letterSpacing: "0.2em", marginBottom: "4px" }}>{c.label.toUpperCase()}</div>
+                <div className="font-body font-medium" style={{ color: ANTRACIT, fontSize: "0.9rem" }}>{c.val}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Footer() {
+  return (
+    <footer style={{ background: ANTRACIT, padding: "48px 0 32px" }}>
+      <div className="max-w-7xl mx-auto px-6 md:px-10">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+          <Logo />
+          <div className="flex flex-col md:flex-row items-center gap-6 md:gap-10">
+            {["PROIECT BAISA", "PROIECT STĂNCEȘTI", "DESPRE NOI"].map(l => (
+              <span key={l} className="nav-link" style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.72rem" }}>{l}</span>
+            ))}
+          </div>
+        </div>
+        <div className="mt-10 pt-6 flex flex-col md:flex-row items-center justify-between gap-3" style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
+          <p className="font-body font-light" style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.75rem" }}>© 2024 Panoramic Botoșani. Toate drepturile rezervate.</p>
+          <p className="font-body font-light" style={{ color: "rgba(255,255,255,0.2)", fontSize: "0.72rem" }}>Politică de Confidențialitate · GDPR</p>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+export default function App() {
+  return (
+    <div className="font-body" style={{ background: CREAM }}>
+      <Navbar />
+      <Hero />
+      <Features />
+      <About />
+      <Contact />
+      <Footer />
+    </div>
+  );
+}
