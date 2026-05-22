@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="ro">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Panoramic Botoșani</title>
 
@@ -24,7 +25,7 @@ scroll-behavior:smooth;
 }
 
 body{
-background:#F7F3EE;
+background:#F9F6F0;
 overflow-x:hidden;
 font-family:'Jost',sans-serif;
 color:#1C1C1E;
@@ -32,9 +33,9 @@ color:#1C1C1E;
 
 :root{
 --gold:#C9A96E;
---gold-light:#E4C98F;
---navy:#081321;
---cream:#F7F3EE;
+--gold-light:#E8D5A3;
+--navy:#0D1B2A;
+--cream:#F9F6F0;
 --dark:#1C1C1E;
 }
 
@@ -49,15 +50,14 @@ position:fixed;
 top:0;
 left:0;
 width:100%;
-height:92px;
+height:90px;
 background:white;
+z-index:999;
 display:flex;
 align-items:center;
 justify-content:space-between;
 padding:0 60px;
-z-index:999;
 border-bottom:1px solid rgba(0,0,0,0.05);
-backdrop-filter:blur(10px);
 }
 
 .logo{
@@ -67,8 +67,8 @@ gap:18px;
 }
 
 .logo img{
-width:62px;
-height:62px;
+width:58px;
+height:58px;
 object-fit:contain;
 border-radius:50%;
 }
@@ -79,29 +79,30 @@ flex-direction:column;
 }
 
 .logo-text h2{
-font-size:52px;
-line-height:0.9;
+font-size:50px;
 letter-spacing:0.08em;
+line-height:0.9;
 font-weight:600;
 color:#111;
 }
 
 .logo-text span{
-margin-top:6px;
 font-size:11px;
 letter-spacing:0.45em;
 color:var(--gold);
+margin-top:6px;
 }
 
 .menu{
 display:flex;
 gap:55px;
+align-items:center;
 }
 
 .menu a{
 text-decoration:none;
-color:#111;
-font-size:13px;
+color:#1C1C1E;
+font-size:12px;
 letter-spacing:0.24em;
 position:relative;
 transition:0.3s;
@@ -111,39 +112,32 @@ transition:0.3s;
 color:var(--gold);
 }
 
-.menu a::after{
-content:'';
-position:absolute;
-left:0;
-bottom:-7px;
-width:0;
-height:1px;
-background:var(--gold);
-transition:0.3s;
-}
-
-.menu a:hover::after{
-width:100%;
+.phone{
+background:linear-gradient(135deg,var(--gold),#b8914e);
+color:white !important;
+padding:14px 24px;
+border-radius:5px;
+font-size:12px !important;
 }
 
 /* HERO */
 
 .hero{
-position:relative;
 width:100%;
 min-height:100vh;
-overflow:hidden;
+position:relative;
 display:flex;
 align-items:center;
+overflow:hidden;
 }
 
-.hero-bg{
+.hero-image{
 position:absolute;
 inset:0;
-background-image:url('hero.PNG');
+background-image:url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1400&q=85&auto=format&fit=crop');
 background-size:cover;
 background-position:center;
-filter:brightness(0.92);
+filter:brightness(0.88);
 }
 
 .hero-overlay{
@@ -153,10 +147,10 @@ inset:0;
 background:
 linear-gradient(
 105deg,
-rgba(247,243,238,0.98) 0%,
-rgba(247,243,238,0.92) 30%,
-rgba(247,243,238,0.45) 55%,
-rgba(247,243,238,0.05) 100%
+rgba(249,246,240,0.98) 0%,
+rgba(249,246,240,0.85) 35%,
+rgba(249,246,240,0.30) 60%,
+rgba(249,246,240,0.05) 100%
 );
 
 }
@@ -164,69 +158,67 @@ rgba(247,243,238,0.05) 100%
 .hero-content{
 position:relative;
 z-index:5;
+width:100%;
 max-width:1400px;
 margin:auto;
-width:100%;
-padding:170px 70px 120px;
+padding:160px 70px 120px;
 }
 
 .tag{
 display:flex;
 align-items:center;
 gap:16px;
-margin-bottom:36px;
+margin-bottom:40px;
 }
 
 .tag span{
 color:var(--gold);
-font-size:12px;
 letter-spacing:0.32em;
+font-size:12px;
 }
 
 .tag-line{
-width:40px;
+width:36px;
 height:1px;
 background:var(--gold);
 }
 
-.hero-title{
+.title{
 line-height:0.9;
 }
 
-.hero-title h1{
+.title h1{
 font-size:170px;
 font-weight:700;
 letter-spacing:-0.03em;
-color:#111;
 }
 
-.hero-title h3{
-font-size:30px;
-font-weight:300;
-letter-spacing:0.55em;
+.title h3{
 color:var(--gold);
+letter-spacing:0.55em;
+font-weight:300;
 margin-top:20px;
+font-size:28px;
 }
 
 .gold-line{
-width:60px;
+width:55px;
 height:2px;
 background:linear-gradient(to right,var(--gold),var(--gold-light));
-margin:42px 0;
+margin:40px 0;
 }
 
 .subtitle{
-font-size:62px;
+font-size:58px;
+margin-bottom:18px;
 font-weight:400;
-margin-bottom:22px;
-color:#1C1C1E;
 }
 
 .description{
+color:#666;
+font-size:18px;
 max-width:560px;
-line-height:1.9;
-font-size:19px;
-color:#5E5E5E;
+line-height:1.8;
 margin-bottom:42px;
 }
 
@@ -234,20 +226,20 @@ margin-bottom:42px;
 display:inline-flex;
 align-items:center;
 gap:12px;
-padding:19px 42px;
-background:linear-gradient(135deg,var(--gold),#b99149);
+background:linear-gradient(135deg,var(--gold),#b8914e);
 color:white;
 text-decoration:none;
-border-radius:5px;
-font-size:13px;
+padding:18px 42px;
+border-radius:4px;
 letter-spacing:0.18em;
-font-weight:600;
+font-size:13px;
 transition:0.35s;
+font-weight:600;
 }
 
 .btn:hover{
 transform:translateY(-4px);
-box-shadow:0 20px 45px rgba(201,169,110,0.35);
+box-shadow:0 18px 40px rgba(201,169,110,0.35);
 }
 
 .stats{
@@ -257,31 +249,24 @@ margin-top:70px;
 }
 
 .stat h2{
-font-size:44px;
+font-size:42px;
 font-weight:600;
-color:#111;
 }
 
 .stat p{
-margin-top:8px;
+color:#888;
+letter-spacing:0.18em;
+margin-top:6px;
 font-size:11px;
-letter-spacing:0.22em;
-color:#8A8A8A;
 }
 
 /* CARDS */
 
-.cards-section{
+.cards-wrapper{
 position:relative;
-margin-top:-110px;
-z-index:20;
-padding:0 60px 100px;
-background:
-linear-gradient(
-180deg,
-transparent 0%,
-#071321 30%
-);
+margin-top:-120px;
+z-index:10;
+padding:0 60px 80px;
 }
 
 .cards{
@@ -289,64 +274,62 @@ max-width:1400px;
 margin:auto;
 display:grid;
 grid-template-columns:repeat(3,1fr);
-gap:28px;
+gap:24px;
 }
 
 .card{
-background:rgba(8,19,33,0.94);
-border:1px solid rgba(201,169,110,0.22);
-border-radius:24px;
-padding:42px;
+background:rgba(13,27,42,0.92);
+border:1px solid rgba(201,169,110,0.18);
+border-radius:22px;
+padding:40px;
 backdrop-filter:blur(14px);
 transition:0.35s;
 }
 
 .card:hover{
 transform:translateY(-8px);
-border-color:rgba(201,169,110,0.55);
-box-shadow:0 30px 60px rgba(0,0,0,0.5);
+border-color:rgba(201,169,110,0.5);
+box-shadow:0 25px 60px rgba(0,0,0,0.45);
 }
 
 .card-icon{
-width:68px;
-height:68px;
-border-radius:18px;
+width:62px;
+height:62px;
+border-radius:16px;
+background:rgba(201,169,110,0.12);
 display:flex;
 align-items:center;
 justify-content:center;
-border:1px solid rgba(201,169,110,0.25);
-background:rgba(201,169,110,0.08);
-font-size:28px;
-margin-bottom:30px;
+color:var(--gold);
+font-size:26px;
+margin-bottom:28px;
 }
 
 .card h3{
 color:white;
-font-size:15px;
-letter-spacing:0.2em;
-margin-bottom:22px;
+letter-spacing:0.18em;
+font-size:14px;
+margin-bottom:14px;
 }
 
 .card p{
-color:rgba(255,255,255,0.65);
+color:rgba(255,255,255,0.55);
 line-height:1.8;
-font-size:17px;
+font-size:15px;
 }
 
-.card a{
-display:inline-block;
-margin-top:28px;
-text-decoration:none;
+.card-bottom{
+margin-top:30px;
 color:var(--gold);
-font-size:13px;
-letter-spacing:0.22em;
+letter-spacing:0.2em;
+font-size:12px;
 }
 
 /* ABOUT */
 
 .about{
-background:#071321;
 padding:120px 60px;
+background:var(--navy);
 }
 
 .about-container{
@@ -354,7 +337,7 @@ max-width:1400px;
 margin:auto;
 display:grid;
 grid-template-columns:1fr 1fr;
-gap:90px;
+gap:80px;
 align-items:center;
 }
 
@@ -364,7 +347,7 @@ position:relative;
 
 .about-image img{
 width:100%;
-border-radius:28px;
+border-radius:24px;
 display:block;
 box-shadow:0 30px 70px rgba(0,0,0,0.45);
 }
@@ -374,33 +357,31 @@ position:absolute;
 bottom:-30px;
 right:-20px;
 background:var(--gold);
-padding:34px;
-border-radius:24px;
+padding:28px;
+border-radius:20px;
 color:white;
-text-align:center;
 }
 
 .experience h2{
-font-size:62px;
+font-size:48px;
 line-height:1;
 }
 
 .experience p{
-margin-top:10px;
-font-size:12px;
-letter-spacing:0.22em;
-line-height:1.7;
+font-size:11px;
+letter-spacing:0.24em;
+margin-top:8px;
 }
 
 .about-text .tag{
-margin-bottom:24px;
+margin-bottom:25px;
 }
 
 .about-text h2{
-font-size:72px;
-line-height:1.1;
 color:white;
-margin-bottom:28px;
+font-size:70px;
+line-height:1.1;
+margin-bottom:25px;
 }
 
 .about-text h2 span{
@@ -408,16 +389,43 @@ color:var(--gold);
 }
 
 .about-text p{
+color:rgba(255,255,255,0.65);
+line-height:1.9;
+margin-bottom:24px;
+font-size:17px;
+}
+
+/* CONTACT */
+
+.contact{
+padding:120px 60px;
+background:#06111D;
+text-align:center;
+}
+
+.contact h2{
+font-size:72px;
+color:white;
+margin-bottom:25px;
+}
+
+.contact p{
+color:rgba(255,255,255,0.65);
 font-size:18px;
-line-height:2;
-color:rgba(255,255,255,0.72);
-margin-bottom:26px;
+margin-bottom:40px;
+}
+
+.contact-number{
+font-size:48px;
+color:var(--gold);
+text-decoration:none;
+font-family:'Cormorant Garamond',serif;
 }
 
 /* FOOTER */
 
 .footer{
-background:#06111D;
+background:#040B14;
 padding:45px;
 text-align:center;
 color:rgba(255,255,255,0.55);
@@ -429,7 +437,7 @@ letter-spacing:0.2em;
 
 @media(max-width:1100px){
 
-.hero-title h1{
+.title h1{
 font-size:110px;
 }
 
@@ -450,7 +458,7 @@ grid-template-columns:1fr;
 @media(max-width:768px){
 
 .navbar{
-padding:0 22px;
+padding:0 24px;
 }
 
 .menu{
@@ -462,14 +470,14 @@ font-size:28px;
 }
 
 .hero-content{
-padding:150px 24px 120px;
+padding:140px 24px 120px;
 }
 
-.hero-title h1{
+.title h1{
 font-size:72px;
 }
 
-.hero-title h3{
+.title h3{
 font-size:18px;
 }
 
@@ -486,16 +494,28 @@ gap:35px;
 flex-wrap:wrap;
 }
 
-.cards-section{
-padding:0 24px 80px;
+.cards-wrapper{
+padding:0 24px 70px;
 }
 
 .about{
 padding:100px 24px;
 }
 
+.contact{
+padding:100px 24px;
+}
+
+.contact h2{
+font-size:42px;
+}
+
+.contact-number{
+font-size:34px;
+}
+
 .about-text h2{
-font-size:46px;
+font-size:48px;
 }
 
 }
@@ -505,8 +525,6 @@ font-size:46px;
 </head>
 
 <body>
-
-<!-- NAVBAR -->
 
 <nav class="navbar">
 
@@ -522,20 +540,17 @@ font-size:46px;
 </div>
 
 <div class="menu">
-
 <a href="#">PROIECT BAISA</a>
 <a href="#">PROIECT STĂNCEȘTI</a>
 <a href="#">DESPRE NOI</a>
-
+<a class="phone" href="tel:0748257986">0748257986</a>
 </div>
 
 </nav>
 
-<!-- HERO -->
-
 <section class="hero">
 
-<div class="hero-bg"></div>
+<div class="hero-image"></div>
 
 <div class="hero-overlay"></div>
 
@@ -546,7 +561,7 @@ font-size:46px;
 <div class="tag-line"></div>
 </div>
 
-<div class="hero-title">
+<div class="title">
 
 <h1 class="font-display">
 PANORAMIC
@@ -593,9 +608,7 @@ VEZI PROIECTELE →
 
 </section>
 
-<!-- CARDS -->
-
-<section class="cards-section">
+<section class="cards-wrapper">
 
 <div class="cards">
 
@@ -609,9 +622,9 @@ VEZI PROIECTELE →
 Cartier liniștit, natură și confort urban.
 </p>
 
-<a href="#">
+<div class="card-bottom">
 DETALII →
-</a>
+</div>
 
 </div>
 
@@ -625,9 +638,9 @@ DETALII →
 Vedere panoramică și arhitectură contemporană.
 </p>
 
-<a href="#">
+<div class="card-bottom">
 DETALII →
-</a>
+</div>
 
 </div>
 
@@ -641,9 +654,9 @@ DETALII →
 Echipa și misiunea Panoramic Botoșani.
 </p>
 
-<a href="#">
+<div class="card-bottom">
 DETALII →
-</a>
+</div>
 
 </div>
 
@@ -651,26 +664,17 @@ DETALII →
 
 </section>
 
-<!-- ABOUT -->
-
 <section class="about">
 
 <div class="about-container">
 
 <div class="about-image">
 
-<img src="about.jpeg" alt="About Panoramic">
+<img src="https://images.unsplash.com/photo-1460317442991-0ec209397118?w=1200&q=80&auto=format&fit=crop" alt="About Panoramic">
 
 <div class="experience">
-
-<h2 class="font-display">
-10+
-</h2>
-
-<p>
-ANI<br>EXPERIENȚĂ
-</p>
-
+<h2 class="font-display">10+</h2>
+<p>ANI EXPERIENȚĂ</p>
 </div>
 
 </div>
@@ -708,7 +712,21 @@ CONTACTEAZĂ-NE →
 
 </section>
 
-<!-- FOOTER -->
+<section class="contact">
+
+<h2 class="font-display">
+Contact
+</h2>
+
+<p>
+Programează o vizionare sau află mai multe detalii despre apartamentele Panoramic.
+</p>
+
+<a class="contact-number" href="tel:0748257986">
+0748257986
+</a>
+
+</section>
 
 <footer class="footer">
 
